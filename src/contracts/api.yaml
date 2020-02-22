@@ -1,0 +1,93 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: FoodLovers application
+  license:
+    name: MIT
+servers:
+  - url: "http://localhost:8080"
+paths:
+  /api/restaurants:
+    get:
+      summary: List of all restaurants
+      operationId: restaurantList
+      tags:
+        - restaurants
+      parameters:
+        - name: name
+          in: query
+          description: Specify restaurant name
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: A array of restaurants (not paged)
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Restaurants"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      summary: Create a new restaurant entry
+      operationId: createRestaurant
+      tags:
+        - restaurants
+      responses:
+        '201':
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+components:
+  schemas:
+    Restaurants:
+      type: object
+      required:
+        - id
+        - name
+        - lat
+        - lng
+        - type
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 654
+        name:
+          type: string
+          example: Sydney Australian Sportsbar
+        lat:
+          type: string
+          example: 52.485763
+        lng:
+          type: string
+          example: 52.485763
+        type:
+          type: string
+          example: Australian Restaurant
+        food_category:
+          type: string
+          example: Australian
+    Error:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
