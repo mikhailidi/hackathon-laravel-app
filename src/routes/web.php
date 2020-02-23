@@ -12,5 +12,14 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('demo');
 });
+
+Route::get('/closest', function () {
+    return view('closest');
+});
+
+Route::get('/travel', function () {
+    return view('travel');
+});
+
